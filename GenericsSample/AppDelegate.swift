@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = UINavigationController(rootViewController: SomeListController())
+        window?.rootViewController = UINavigationController(rootViewController: CatController())
         
         return true
     }

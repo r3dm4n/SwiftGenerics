@@ -8,6 +8,7 @@
 
 import UIKit
 
+//MARK:-Generic TableViewController
 class BaseTableViewController<T: BaseCell<U>, U>: UITableViewController {
     
     let cellId = "cellId"
@@ -32,18 +33,33 @@ class BaseTableViewController<T: BaseCell<U>, U>: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! BaseCell<U>
+        
+        cell.item = items[indexPath.row]
+        print(cell.item, "\(indexPath.row)")
+        
+    }
+    
 }
 
-
+//MARK:-Generics TableViewCell
 class BaseCell<U>: UITableViewCell {
     var item: U!
 }
 
 
+//Models
 struct Dog {
     let name: String
 }
 
+struct Cat {
+    let name: String
+}
+
+
+//MARK:-TableView Cells
 class DogCell: BaseCell<Dog> {
     override var item: Dog! {
         didSet {
@@ -52,23 +68,30 @@ class DogCell: BaseCell<Dog> {
     }
 }
 
-
-
-class StringCell: BaseCell<String> {
-    override var item: String! {
+class CatCell: BaseCell<Cat> {
+    override var item: Cat! {
         didSet {
-            textLabel?.text = "\(item)"
+            textLabel?.text = item.name
         }
     }
 }
 
-class DummyController: BaseTableViewController<StringCell, String> {
+
+//MARK:-Controllers
+class CatController: BaseTableViewController<CatCell, Cat> {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        items = [
+            Cat(name: "Miau miau"),
+            Cat(name: "Purr purr purr")
+        ]
+    }
     
 }
 
-
-
-class SomeListController: BaseTableViewController<DogCell, Dog> {
+class DogController: BaseTableViewController<DogCell, Dog> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
