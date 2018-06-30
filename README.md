@@ -1,4 +1,3 @@
 # SwiftGenerics
-Swift Generics Sample
 
-Swift Simple Generics Example
+Simple Swift Generics Example
